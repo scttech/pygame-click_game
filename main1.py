@@ -1,4 +1,5 @@
 import pygame
+import math
 from Game_Object import *
 from pygame.locals import *
 from sys import exit
@@ -14,14 +15,15 @@ pika = Game_Object(screen_height, screen_width, "pika.jpeg")
 
 clock = pygame.time.Clock()
 score = 0
-
+timeleft = 30000 
+407
 def handle_mouse():
         global score
         pos_x, pos_y = pygame.mouse.get_pos()
         if pika.is_clicked(pygame.mouse):
-                score += 1
+                score += pika.get_value()
         else:
-                score -= 1
+                score -= pika.get_value()
 
 def display(message):
         font = pygame.font.Font(None,36)
@@ -37,7 +39,11 @@ while True:
 
 	screen.fill((255,255,255))
 	pika.update(screen)
-	display("Score: " + str(score))
+	timeleft = int((30000 - pygame.time.get_ticks()) / 1000)
+	display("Score: " + str(score) + " Time Left: " + str(timeleft))
 	pygame.display.update()
-	clock.tick(30)
+	clock.tick(120)
+
+	if timeleft <= 0:
+                break
 

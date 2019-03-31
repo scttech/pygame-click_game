@@ -4,6 +4,7 @@ import random
 class Game_Object:
     x = 0
     y = 0
+    value = 10
     speed_x = 1
     speed_y = 1
     image = ""
@@ -11,8 +12,8 @@ class Game_Object:
     image_height = 100
 
     def __init__(self, screen_height, screen_width, image_name):
-        self.x = random.randint(10, screen_width)
-        self.y = random.randint(10, screen_height)
+        self.x = random.randint(10, screen_width - self.image_width)
+        self.y = random.randint(10, screen_height - self.image_height)
         self.image = pygame.image.load(image_name).convert()
         self.image = pygame.transform.scale(self.image, (self.image_width,
                                                          self.image_height))
@@ -32,6 +33,9 @@ class Game_Object:
         self.move_bounce(screen)
         screen.blit(self.image, (self.x, self.y))
 
+    def get_value(self):
+        return self.value
+    
     def is_clicked(self, mouse):
         bound_left = self.x
         bound_right = self.x + self.image_width
